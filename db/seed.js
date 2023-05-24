@@ -18,15 +18,16 @@ async function createTables() {
         id SERIAL PRIMARY KEY, 
         username TEXT UNIQUE NOT NULL, 
         password TEXT NOT NULL
-    )
+    );
 
     CREATE TABLE routines (
         id SERIAL PRIMARY KEY,
         "creator_id" INTEGER REFERENCES users(id),
-        is_public BOOLEAN DEFAULT false
+        is_public BOOLEAN DEFAULT false,
         name VARCHAR(255) NOT NULL,
-        goal TEXT NOT NULL,
-        )
+        goal TEXT NOT NULL
+        );
+
     `);
   } catch (error) {
     console.error(error);
