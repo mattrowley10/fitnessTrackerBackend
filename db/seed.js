@@ -56,8 +56,8 @@ async function createTables() {
 async function populateTables() {
   console.log("Populating tables...");
   try {
-    await createUser({ username: "Lindsay", password: 12345678 });
-    await createUser({ username: "Matthew", password: 12345678 });
+    await createUser("Lindsay", "12345678");
+    await createUser("Matthew", "12345678");
     console.log("Finished populating tables!");
   } catch (error) {
     console.error("Error populating tables!", error);

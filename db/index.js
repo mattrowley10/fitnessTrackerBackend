@@ -1,18 +1,18 @@
-const { Client } = require("pg");
-const client = new Client("postgress://localhost:5432/fitnesstrackerbackend");
+const client = require("./client");
 
-async function createUser({ id, username, password }) {
+async function createUser(username, password) {
   try {
     const {
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO  users(id, username, password)
-        VALUES($1, $2, $3)
+        INSERT INTO  users(username, password)
+        VALUES($1, $2)
         ON CONFLICT (username) DO NOTHING
         RETURNING *;`,
-      [id, username, password]
+      [username, password]
     );
+    console.log(user);
   } catch (error) {
     throw error;
   }
