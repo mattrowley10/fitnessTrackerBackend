@@ -8,8 +8,9 @@ async function dropTables() {
     await client.query(`DROP TABLE IF EXISTS activities;`);
     await client.query(`DROP TABLE IF EXISTS routines;`);
     await client.query(`DROP TABLE IF EXISTS users;`);
+    console.log("Finished dropping tables!");
   } catch (error) {
-    console.error(error);
+    console.error("Error dropping tables!");
   }
 }
 
