@@ -1,4 +1,5 @@
 const client = require("./client.js");
+const { createUser } = require("./index.js");
 // const  = require("./index")
 
 async function dropTables() {
@@ -15,7 +16,7 @@ async function dropTables() {
 }
 
 async function createTables() {
-  console.log("Creating tables");
+  console.log("Creating tables...");
   try {
     await client.query(`
     CREATE TABLE users(
@@ -46,17 +47,20 @@ async function createTables() {
         count INTEGER NOT NULL
     );
     `);
+    console.log("Finished creating tables!");
   } catch (error) {
     console.error(error);
   }
 }
 
 async function populateTables() {
-  console.log("Populating tables");
+  console.log("Populating tables...");
   try {
-    // await createTables();
+    await createUser({ username: "Lindsay", password: 12345678 });
+    await createUser({ username: "Matthew", password: 12345678 });
+    console.log("Finished populating tables!");
   } catch (error) {
-    console.error(error);
+    console.error("Error populating tables!", error);
   }
 }
 
@@ -67,7 +71,7 @@ async function rebuildDb() {
     await createTables();
     await populateTables();
   } catch (error) {
-    console.error(error);
+    console.error("Error rebuilding database!");
   } finally {
     client.end();
   }
