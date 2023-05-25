@@ -1,3 +1,4 @@
+
 const { Client } = require('pg')
 const client = new Client('postgress://localhost:5432/fitnesstrackerbackend')
 
@@ -54,3 +55,4 @@ module.exports = {
     getAllUsers,
     createRoutines
 }
+
