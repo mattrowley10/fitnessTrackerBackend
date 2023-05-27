@@ -18,9 +18,9 @@ const routines = [
   },
 ];
 
-// const activities = [
-//   { id: { id }, name: "Matthew", description: "leg day" },
-//   { id: { id }, name: "Lindsay", description: "push-ups" },
-// ];
+const activities = [
+  {name: "Matthew", description: "leg day" },
+  {name: "Lindsay", description: "push-ups" },
+];
 
-module.exports = { users, routines };
+module.exports = { users, routines, activities };
