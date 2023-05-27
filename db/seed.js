@@ -1,8 +1,10 @@
 const client = require("./client.js");
+
 const { createUser } = require('./adapters/users');
 const { createRoutines } = require('./adapters/routines');
 const { createActivities } = require('./adapters/activities')
 const { users, routines, activities } = require("./seedData");
+
 
 async function dropTables() {
   console.log("Dropping tables");
@@ -18,7 +20,7 @@ async function dropTables() {
 }
 
 async function createTables() {
-  console.log("Creating tables");
+  console.log("Creating tables...");
   try {
     await client.query(`
     CREATE TABLE users(
@@ -49,14 +51,16 @@ async function createTables() {
         count INTEGER NOT NULL
     );
     `);
+    console.log("Finished creating tables!");
   } catch (error) {
     console.error(error);
   }
 }
 
 async function populateTables() {
-  console.log("Populating tables");
+  console.log("Populating tables...");
   try {
+
     for(const user of users){
     const createdUser = await createUser(user)
     console.log(createdUser)
@@ -69,8 +73,11 @@ async function populateTables() {
       const createdActivity = await createActivities(activity)
       console.log(createdActivity)
     }
+
+    console.log("Finished populating tables!");
+
   } catch (error) {
-    console.error(error);
+    console.error("Error populating tables!", error);
   }
 }
 
@@ -81,7 +88,7 @@ async function rebuildDb() {
     await createTables();
     await populateTables();
   } catch (error) {
-    console.error(error);
+    console.error("Error rebuilding database!");
   } finally {
     client.end();
   }
