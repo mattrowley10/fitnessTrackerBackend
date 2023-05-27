@@ -5,14 +5,12 @@ const users = [
 
 const routines = [
   {
-    id: { id },
     creator_id: 1,
     is_public: true,
     name: "Matthew",
     goal: "to be the best",
   },
   {
-    id: { id },
     creator_id: 2,
     is_public: false,
     name: "Lindsay",
@@ -21,6 +19,8 @@ const routines = [
 ];
 
 const activities = [
-  { id: { id }, name: "Matthew", description: "leg day" },
-  { id: { id }, name: "Lindsay", description: "push-ups" },
+  {name: "Matthew", description: "leg day" },
+  {name: "Lindsay", description: "push-ups" },
 ];
+
+module.exports = { users, routines, activities };
