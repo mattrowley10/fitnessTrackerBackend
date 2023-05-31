@@ -34,7 +34,6 @@ async function getActivitesById(activityId) {
         message: "No activity with that id exists",
       };
     }
-    //Do i need something else before this?//
     return activity;
   } catch (error) {
     throw error;

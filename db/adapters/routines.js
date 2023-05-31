@@ -18,4 +18,75 @@ async function createRoutines({
     }
 }
 
-module.exports = { createRoutines }
+async function getRoutineById() {
+    try {
+       const { } 
+    } catch (error) {
+        
+    }
+}
+
+async function getRoutinesWithoutActivities(){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getAllRoutines(){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getAllPublicRoutines(){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getAllRoutinesByUser(username){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getPublicRoutinesByUser(username){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getPublicRoutinesByActivity(activityId){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function updateRoutine(routineId, isPublic, name, goal){
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function destroyRoutine(routineId){
+try {
+    
+} catch (error) {
+    throw error;
+}
+}
+module.exports = { createRoutines, getRoutineById, getRoutinesWithoutActivities, getAllRoutines, getAllPublicRoutines, getAllRoutinesByUser, getPublicRoutinesByUser, getPublicRoutinesByActivity, destroyRoutine, updateRoutine }
