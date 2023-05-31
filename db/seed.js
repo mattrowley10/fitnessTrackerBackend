@@ -1,10 +1,10 @@
 const client = require("./client.js");
 
-const { createUser } = require('./adapters/users');
-const { createRoutines } = require('./adapters/routines');
-const { createActivities } = require('./adapters/activities')
+const { createUser } = require("./adapters/users");
+const { createRoutines } = require("./adapters/routines");
+const { createActivities } = require("./adapters/activities");
+// const { getActivitiesById } = require(".adapters/activities");
 const { users, routines, activities } = require("./seedData");
-
 
 async function dropTables() {
   console.log("Dropping tables");
@@ -60,22 +60,20 @@ async function createTables() {
 async function populateTables() {
   console.log("Populating tables...");
   try {
-
-    for(const user of users){
-    const createdUser = await createUser(user)
-    console.log(createdUser)
+    for (const user of users) {
+      const createdUser = await createUser(user);
+      console.log(createdUser);
     }
-    for(const routine of routines){
-      const createdRoutine = await createRoutines(routine)
-      console.log(createdRoutine)
+    for (const routine of routines) {
+      const createdRoutine = await createRoutines(routine);
+      console.log(createdRoutine);
     }
-    for(const activity of activities ){
-      const createdActivity = await createActivities(activity)
-      console.log(createdActivity)
+    for (const activity of activities) {
+      const createdActivity = await createActivities(activity);
+      console.log(createdActivity);
     }
 
     console.log("Finished populating tables!");
-
   } catch (error) {
     console.error("Error populating tables!", error);
   }
