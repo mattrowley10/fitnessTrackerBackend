@@ -20,7 +20,6 @@ async function createRoutines({
 
 async function getRoutineById() {
     try {
-       const { } 
     } catch (error) {
         
     }

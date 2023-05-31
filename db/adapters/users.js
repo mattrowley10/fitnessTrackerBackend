@@ -39,7 +39,7 @@ async function getUserById(userId) {
         SELECT id, username
         FROM users
         WHERE id=${userId}
-         `);
+        `);
     if (!user) {
       throw {
         name: "UserNotFoundError",
@@ -67,7 +67,7 @@ async function getUserByUsername(username) {
 
     if (!user) {
       throw {
-        name: "UserNotFoundError";
+        name: "UserNotFoundError",
         message: "A user with that username does not exist"
       }
     }
@@ -77,4 +77,11 @@ async function getUserByUsername(username) {
   }
 }
 
-module.exports = { createUser, getUserById, getUser, getUserByUsername };
+async function getAllUsers(){
+  const { rows } = await client.query(`
+  SELECT * FROM users;
+  `);
+  return rows;
+}
+
+module.exports = { createUser, getUserById, getUser, getUserByUsername, getAllUsers };
