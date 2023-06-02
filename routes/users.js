@@ -1,7 +1,22 @@
 const usersRouter = require("express").Router();
-const { getAllUsers, getUserById } = require("../db/adapters/users");
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
+const {
+  getAllUsers,
+  getUserById,
+  createUser,
+} = require("../db/adapters/users");
 
-usersRouter.post("/register", async (req, res, next) => {});
+usersRouter.post("/register", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const user = await createUser({ username, password: hashedPassword });
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 usersRouter.post("/login", async (req, res, next) => {});
 
