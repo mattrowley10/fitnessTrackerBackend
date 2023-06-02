@@ -122,15 +122,18 @@ async function getPublicRoutinesByActivity(activityId) {
   }
 }
 
-async function updateRoutine(routineId, isPublic, name, goal) {
-  try {
-  } catch (error) {
-    throw error;
-  }
+async function updateRoutine(routineId, isPublic, name, goal, fields = {}) {
+  const { tags } = fields;
+  delete fields.tages;
 }
 
+//Come back and look at this one
 async function destroyRoutine(routineId) {
   try {
+    const { rows } = await client.query(`
+    DELETE *
+    FROM routines`);
+    return rows;
   } catch (error) {
     throw error;
   }
