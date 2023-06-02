@@ -18,7 +18,7 @@ async function createActivities({ name, description }) {
   }
 }
 
-async function getActivitesById(activityId) {
+async function getActivitiesById(activityId) {
   try {
     const {
       rows: [activity],
@@ -59,4 +59,4 @@ async function updateActivity() {
   } catch (error) {}
 }
 
-module.exports = { createActivities, getActivitesById, getAllActivities };
+module.exports = { createActivities, getActivitiesById, getAllActivities };

@@ -3,13 +3,18 @@ const client = require("./client.js");
 const { createUser } = require("./adapters/users");
 const { createRoutines } = require("./adapters/routines");
 const { createActivities } = require("./adapters/activities");
-// const { getActivitiesById } = require(".adapters/activities");
-const { users, routines, activities } = require("./seedData");
+const { createRoutineActivities } = require("./adapters/routine_activities");
+const {
+  users,
+  routines,
+  activities,
+  routine_activities,
+} = require("./seedData");
 
 async function dropTables() {
   console.log("Dropping tables");
   try {
-    await client.query(`DROP TABLE IF EXISTS routineactivities;`);
+    await client.query(`DROP TABLE IF EXISTS routine_activities;`);
     await client.query(`DROP TABLE IF EXISTS activities;`);
     await client.query(`DROP TABLE IF EXISTS routines;`);
     await client.query(`DROP TABLE IF EXISTS users;`);
@@ -43,7 +48,7 @@ async function createTables() {
         description TEXT NOT NULL
     );
 
-    CREATE TABLE routineactivities(
+    CREATE TABLE routine_activities(
         id SERIAL PRIMARY KEY, 
         routine_id INTEGER UNIQUE REFERENCES routines(id),
         activity_id INTEGER UNIQUE REFERENCES activities(id),
@@ -71,6 +76,12 @@ async function populateTables() {
     for (const activity of activities) {
       const createdActivity = await createActivities(activity);
       console.log(createdActivity);
+    }
+    for (const routine_activity of routine_activities) {
+      const createdRoutineActivities = await createRoutineActivities(
+        routine_activity
+      );
+      console.log(createdRoutineActivities);
     }
 
     console.log("Finished populating tables!");

@@ -31,22 +31,18 @@ async function getUser() {
   }
 }
 
-async function getUserById(userId) {
+async function getUserById(id) {
   try {
     const {
       rows: [user],
-    } = await client.query(`
+    } = await client.query(
+      `
         SELECT id, username
         FROM users
-        WHERE id=${userId}
-        `);
-    if (!user) {
-      throw {
-        name: "UserNotFoundError",
-        message: "A user with that is does not exist",
-      };
-    }
-    user = await getUser(userId);
+        WHERE id=$1
+        `,
+      [id]
+    );
 
     return user;
   } catch (error) {
@@ -68,8 +64,8 @@ async function getUserByUsername(username) {
     if (!user) {
       throw {
         name: "UserNotFoundError",
-        message: "A user with that username does not exist"
-      }
+        message: "A user with that username does not exist",
+      };
     }
     return user;
   } catch (error) {
@@ -77,11 +73,17 @@ async function getUserByUsername(username) {
   }
 }
 
-async function getAllUsers(){
+async function getAllUsers() {
   const { rows } = await client.query(`
   SELECT * FROM users;
   `);
   return rows;
 }
 
-module.exports = { createUser, getUserById, getUser, getUserByUsername, getAllUsers };
+module.exports = {
+  createUser,
+  getUserById,
+  getUser,
+  getUserByUsername,
+  getAllUsers,
+};
