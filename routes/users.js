@@ -18,7 +18,14 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
-usersRouter.post("/login", async (req, res, next) => {});
+// usersRouter.post("/login", async (req, res, next) => {
+//   try {
+//     const { username, password } = req.body;
+//     const comparePassword = await bcrypt.compare(username, password, function(err, res))
+//   } catch (error) {
+
+//   }
+// });
 
 usersRouter.get("/logout", async (req, res, next) => {});
 
