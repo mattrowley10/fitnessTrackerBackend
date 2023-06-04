@@ -38,6 +38,13 @@ async function getRoutineActivityById(routineActivityId) {
 
 async function addActivityById(routineId, activityId, count, duration) {
   try {
+    const { rows } = await client.query(
+      `
+      INSERT INTO routine_activities (routine_id, activity_id, count, duration)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *`[(routineId, activityId, count, duration)]
+    );
+    return rows[0];
   } catch (error) {
     throw error;
   }
@@ -45,6 +52,16 @@ async function addActivityById(routineId, activityId, count, duration) {
 
 async function updateRoutineActivity(routineActivityId, count, duration) {
   try {
+    const { rows } = await client.query(
+      `
+    UPDATE routine_activities
+    SET count = $1, 
+    duration $2
+    WHERE id = $3
+    RETURNING *`,
+      [count, duration, routineActivityId]
+    );
+    return rows[0];
   } catch (error) {
     throw error;
   }
@@ -52,6 +69,14 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
 
 async function destroyRoutineActivity(routineActivityId) {
   try {
+    const { rows } = await client.query(
+      `
+    DELETE FROM routine_activities
+    WHERE id = $1
+    RETURNING *`,
+      [routineActivityId]
+    );
+    return rows[0];
   } catch (error) {
     throw error;
   }

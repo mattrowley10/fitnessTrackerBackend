@@ -53,10 +53,23 @@ async function getAllActivities() {
   }
 }
 
-async function updateActivity() {
+async function updateActivity(activityId, name, description) {
   try {
-    //need to return to this one
+    const { rows } = await client.query(
+      `
+    UPDATE activities
+    SET name = $2, description = $3
+    WHERE id = $1
+    RETURNING *`,
+      [activityId, name, description]
+    );
+    return rows[0];
   } catch (error) {}
 }
 
-module.exports = { createActivities, getActivitiesById, getAllActivities };
+module.exports = {
+  createActivities,
+  getActivitiesById,
+  getAllActivities,
+  updateActivity,
+};
