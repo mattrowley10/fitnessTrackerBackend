@@ -100,7 +100,7 @@ async function getPublicRoutinesByUser(username) {
   try {
     const { rows } = await client.query(
       `
-    SELECT routines *
+    SELECT *
     FROM routines
     JOIN users ON routines.creator_id = users.id
     WHERE routines.is_public = true
@@ -115,24 +115,49 @@ async function getPublicRoutinesByUser(username) {
 
 async function getPublicRoutinesByActivity(activityId) {
   try {
-    const { rows } = await client.query(`
-    `);
+    const { rows } = await client.query(
+      `
+    SELECT *
+    FROM routines
+    JOIN routine_activites ON routines.id = routine_activites.routine_id
+    WHERE routines.is_public = true
+    AND routine_activites.activity_id = $1
+    `,
+      [activityId]
+    );
+
+    return rows;
   } catch (error) {
     throw error;
   }
 }
 
-async function updateRoutine(routineId, isPublic, name, goal, fields = {}) {
-  const { tags } = fields;
-  delete fields.tages;
+async function updateRoutine(routineId, isPublic, name, goal) {
+  try {
+    const { rows } = await client.query(
+      `
+    UPDATE routines
+    SET is_public = $1, name = $2, goal = $3
+    WHERE id = $4
+    RETURNING *
+    `,
+      [isPublic, name, goal, routineId]
+    );
+
+    return rows[0];
+  } catch (error) {}
 }
 
-//Come back and look at this one
 async function destroyRoutine(routineId) {
   try {
-    const { rows } = await client.query(`
-    DELETE *
-    FROM routines`);
+    const { rows } = await client.query(
+      `
+    DELETE FROM routines
+    WHERE id = $1
+    RETURNING *`,
+      [routineId]
+    );
+
     return rows;
   } catch (error) {
     throw error;
