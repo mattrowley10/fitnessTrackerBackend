@@ -9,7 +9,7 @@ const {
   createRoutines,
 } = require("../db/adapters/routines");
 
-routinesRouter.get("/routines", async (req, res, next) => {
+routinesRouter.get("/", async (req, res, next) => {
   try {
     const routines = await getAllRoutines();
     res.send(routines);
@@ -45,12 +45,14 @@ routinesRouter.post("/routines", async (req, res, next) => {
 //       };
 //     }
 
-//     if (existingRoutine.creator_id !===.user.is) {
+//     if (existingRoutine.creator_id !=== user.is) {
 //       throw {
 //         name: "unauthrois"
 //       }
 //     }
-//   } catch (error) {}
+//   } catch (error) {
+//     next(error)
+
 // });
 
 //needs authentication token
