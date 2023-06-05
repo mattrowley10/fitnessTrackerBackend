@@ -8,6 +8,7 @@ const {
   createUser,
   getUserByUsername,
 } = require("../db/adapters/users");
+const { authRequired } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
   try {
@@ -40,7 +41,7 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
-usersRouter.post("/login", async (req, res, next) => {});
+usersRouter.post("/login", authRequired, async (req, res, next) => {});
 
 usersRouter.get("/logout", async (req, res, next) => {
   try {

@@ -58,15 +58,10 @@ async function getUserByUsername(username) {
       `
     SELECT *
     FROM users
-    WHERE username=$1`[username]
+    WHERE username=$1`,
+      [username]
     );
 
-    if (!user) {
-      throw {
-        name: "UserNotFoundError",
-        message: "A user with that username does not exist",
-      };
-    }
     return user;
   } catch (error) {
     throw error;

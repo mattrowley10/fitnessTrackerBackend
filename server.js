@@ -1,8 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
+require("dotenv").config();
 const PORT = 3000;
 const cors = require("cors");
 const server = express();
+const cookieParser = require("cookie-parser");
 
 const client = require("./db/client");
 client.connect();
@@ -10,6 +12,7 @@ client.connect();
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(cors());
+server.use(cookieParser(process.env.COOKIE_SECRET));
 
 server.use("/api", require("./routes"));
 
