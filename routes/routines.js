@@ -8,11 +8,24 @@ const {
   destroyRoutine,
   createRoutines,
 } = require("../db/adapters/routines");
+const { authRequired } = require("./utils");
 
 routinesRouter.get("/", async (req, res, next) => {
   try {
     const routines = await getAllRoutines();
     res.send(routines);
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.get("/:id", authRequired, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const routineById = await getRoutineById(id);
+    res.send({
+      routineById,
+    });
   } catch (error) {
     next(error);
   }

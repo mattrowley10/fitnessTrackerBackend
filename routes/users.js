@@ -41,7 +41,38 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
-usersRouter.post("/login", authRequired, async (req, res, next) => {});
+usersRouter.post("/login", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const _user = await getUserByUsername(username);
+    if (username.length === 0) {
+      next({
+        message: "You must enter a username!",
+        name: "Username Error",
+      });
+      return;
+    }
+    if (_user.username !== username) {
+      next({
+        message: "Incorrect Username!",
+        name: "Username Error",
+      });
+      return;
+    }
+    const match = await bcrypt.compare(password, _user.password);
+    const token = jwt.sign(_user, process.env.JWT_SECRET);
+    if (match === true) {
+      res.cookie("token", token, {
+        sameSite: "strict",
+        httpOnly: true,
+        signed: true,
+      });
+      res.send(_user);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 usersRouter.get("/logout", async (req, res, next) => {
   try {
@@ -54,10 +85,14 @@ usersRouter.get("/logout", async (req, res, next) => {
       loggedIn: false,
       message: "Logged Out!",
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
 
-usersRouter.get("/me", (req, res, next) => {});
+usersRouter.get("/me", authRequired, async (req, res, next) => {
+  res.send(req.user);
+});
 
 usersRouter.get("/", async (req, res, next) => {
   try {

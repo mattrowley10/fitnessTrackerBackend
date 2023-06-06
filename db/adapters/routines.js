@@ -22,11 +22,14 @@ async function getRoutineById(id) {
   try {
     const {
       rows: [routine],
-    } = await client.query(`
+    } = await client.query(
+      `
             SELECT *
             FROM routines
             WHERE id = $1
-            `);
+            `,
+      [id]
+    );
 
     if (!routine) {
       throw {
