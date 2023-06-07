@@ -10,10 +10,19 @@ const {
 } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
-routinesRouter.get("/", async (req, res, next) => {
+routinesRouter.get("/", authRequired, async (req, res, next) => {
   try {
     const routines = await getAllRoutines();
     res.send(routines);
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.get("/public-routines", authRequired, async (req, res, next) => {
+  try {
+    const publicRoutines = await getAllPublicRoutines();
+    res.send(publicRoutines);
   } catch (error) {
     next(error);
   }
@@ -31,13 +40,17 @@ routinesRouter.get("/:id", authRequired, async (req, res, next) => {
   }
 });
 
-routinesRouter.post("/routines", async (req, res, next) => {
+routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
   try {
     const { creatorId, isPublic, name, goal } = req.body;
 
-    const newRoutine = await createRoutines(creatorId, isPublic, name, goal);
-
-    res.status(201).json({ routine: newRoutine });
+    const newRoutine = await createRoutines({
+      creatorId,
+      isPublic,
+      name,
+      goal,
+    });
+    res.send(newRoutine);
   } catch (error) {
     next(error);
   }
