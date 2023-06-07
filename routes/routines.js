@@ -7,6 +7,7 @@ const {
   getRoutineById,
   destroyRoutine,
   createRoutines,
+  updateRoutine,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
@@ -31,9 +32,19 @@ routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
   try {
     const { is_public, name, goal } = req.body;
 
+<<<<<<< HEAD
     const newRoutine = await createRoutines({
       creator_id: req.user.id,
       is_public,
+=======
+routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
+  try {
+    const { creatorId, isPublic, name, goal } = req.body;
+
+    const newRoutine = await createRoutines({
+      creatorId,
+      isPublic,
+>>>>>>> 146f704059d8537d2c02c13c85554e20d6dec5b0
       name,
       goal,
     });
@@ -42,6 +53,10 @@ routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 146f704059d8537d2c02c13c85554e20d6dec5b0
 routinesRouter.get("/:id", authRequired, async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -53,21 +68,28 @@ routinesRouter.get("/:id", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+<<<<<<< HEAD
 
 //needs authentication token
 // routinesRouter.patch("/routines/:routinesId", async (req, res, next) => {
 //   try {
 //     const routineId = req.params.routineId;
 //     const {isPublic, name, goal } = req.body;
+=======
+>>>>>>> 146f704059d8537d2c02c13c85554e20d6dec5b0
 
-//     const existingRoutine = await getRoutineById(routineId);
-
-//     if(!existingRoutine) {
-//       throw {
-//         name: "RoutineNotFoundError",
-//         message: "That routine does not exist",
-//       };
+// routinesRouter.patch(
+//   "/routines/:routineId",
+//   authRequired,
+//   async (req, res, next) => {
+//     try {
+//       const routineId = req.params.routineId;
+//       const newRoutine = await updateRoutine({ isPublic, name, goal });
+//       re.send(newRoutine);
+//     } catch (error) {
+//       next(error);
 //     }
+<<<<<<< HEAD
 
 //     if (existingRoutine.creator_id !=== user.id) {
 //       throw {
@@ -106,6 +128,24 @@ routinesRouter.get("/:id", authRequired, async (req, res, next) => {
 //     res.status(204).send();
 //   } catch (error) {
 //     next(error);
+=======
+>>>>>>> 146f704059d8537d2c02c13c85554e20d6dec5b0
 //   }
-// });
+// );
+
+// routinesRouter.delete(
+//   "/routines/:routineId",
+//   authRequired,
+//   async (req, res, next) => {
+//     try {
+//       const routineId = req.params.routineId;
+//       const routine = await getRoutineById(routineId);
+
+//       await destroyRoutine(routineId);
+
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 module.exports = routinesRouter;

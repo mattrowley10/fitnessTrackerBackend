@@ -148,7 +148,9 @@ async function updateRoutine(routineId, isPublic, name, goal) {
     );
 
     return rows[0];
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function destroyRoutine(routineId) {
