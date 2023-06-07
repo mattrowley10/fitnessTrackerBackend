@@ -27,7 +27,21 @@ routinesRouter.get("/public-routines", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
+  try {
+    const { is_public, name, goal } = req.body;
 
+    const newRoutine = await createRoutines({
+      creator_id: req.user.id,
+      is_public,
+      name,
+      goal,
+    });
+    res.send(newRoutine);
+  } catch (error) {
+    next(error);
+  }
+});
 routinesRouter.get("/:id", authRequired, async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -35,22 +49,6 @@ routinesRouter.get("/:id", authRequired, async (req, res, next) => {
     res.send({
       routineById,
     });
-  } catch (error) {
-    next(error);
-  }
-});
-
-routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
-  try {
-    const { creatorId, isPublic, name, goal } = req.body;
-
-    const newRoutine = await createRoutines({
-      creatorId,
-      isPublic,
-      name,
-      goal,
-    });
-    res.send(newRoutine);
   } catch (error) {
     next(error);
   }
@@ -71,9 +69,9 @@ routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
 //       };
 //     }
 
-//     if (existingRoutine.creator_id !=== user.is) {
+//     if (existingRoutine.creator_id !=== user.id) {
 //       throw {
-//         name: "unauthrois"
+//         name: "unauthorized"
 //       }
 //     }
 //   } catch (error) {

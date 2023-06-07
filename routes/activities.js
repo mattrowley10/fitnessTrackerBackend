@@ -25,5 +25,11 @@ activitiesRouter.get("/:id", authRequired, async (req, res, next) => {
   }
 });
 
-activitiesRouter.post("/");
+activitiesRouter.post("/create-activity", authRequired, (req, res, next) => {
+  try {
+    const { name, description } = req.body;
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = activitiesRouter;

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 require("dotenv").config();
 const PORT = 3000;
@@ -13,8 +14,12 @@ server.use(express.json());
 server.use(morgan("dev"));
 server.use(cors());
 server.use(cookieParser(process.env.COOKIE_SECRET));
-
 server.use("/api", require("./routes"));
+server.use(express.static(path.join(__dirname, "./client", "dist")));
+
+server.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "./client/dist", "index.html"));
+});
 
 server.use((err, req, res, next) => {
   res.send({
