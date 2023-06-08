@@ -20,6 +20,7 @@ async function createRoutines({ creator_id, is_public, name, goal }) {
 
 async function getRoutineById(id) {
   try {
+    console.log("get routines by id", id);
     const {
       rows: [routine],
     } = await client.query(
@@ -37,6 +38,7 @@ async function getRoutineById(id) {
         message: "No Routine with that id exists",
       };
     }
+
     return routine;
   } catch (error) {
     throw error;
@@ -135,8 +137,9 @@ async function getPublicRoutinesByActivity(activityId) {
   }
 }
 
-async function updateRoutine(routineId, isPublic, name, goal) {
+async function updateRoutine(is_public, name, goal, id) {
   try {
+    console.log("update routine", is_public, name, goal, id);
     const { rows } = await client.query(
       `
     UPDATE routines
@@ -144,10 +147,10 @@ async function updateRoutine(routineId, isPublic, name, goal) {
     WHERE id = $4
     RETURNING *
     `,
-      [isPublic, name, goal, routineId]
+      [is_public, name, goal, id]
     );
 
-    return rows[0];
+    return rows;
   } catch (error) {
     throw error;
   }
