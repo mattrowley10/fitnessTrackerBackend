@@ -20,7 +20,7 @@ routinesRouter.get("/", authRequired, async (req, res, next) => {
   }
 });
 
-routinesRouter.get("/public-routines", authRequired, async (req, res, next) => {
+routinesRouter.get("/public-routines", async (req, res, next) => {
   try {
     const publicRoutines = await getAllPublicRoutines();
     res.send(publicRoutines);
