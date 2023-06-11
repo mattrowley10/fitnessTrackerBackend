@@ -1,6 +1,7 @@
-// import React from 'react'
-// import { useNavigate } from "react-router"
+// import React from "react";
+// import { logout } from "../api/helpers";
 
 export default function Logout() {
-  return <div>logout</div>;
+  const reload = window.location.reload(false);
+  return reload;
 }

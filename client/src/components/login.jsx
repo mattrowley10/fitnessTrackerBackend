@@ -2,19 +2,24 @@ import { useState } from "react";
 import "../App.css";
 import useAuth from "../hooks/useAuth";
 import { loginUser } from "../api/helpers";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const nav = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useAuth();
+  const { setUser, setLoggedIn } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       const result = await loginUser(username, password);
       console.log("Result in component: ", result);
-      setToken(result.data.token);
-      localStorage.setItem("token", result.data.token);
+      if (result.success) {
+        setUser(result.data);
+        setLoggedIn(true);
+        nav("/");
+      }
     } catch (error) {
       console.error(error);
     }

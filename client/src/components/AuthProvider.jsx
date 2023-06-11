@@ -10,7 +10,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function fetchMe() {
       try {
-        const { user } = await getMe(user);
+        const result = await getMe(user);
+        console.log(result);
         setUser(user);
         setLoggedIn(true);
       } catch (error) {

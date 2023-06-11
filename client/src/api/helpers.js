@@ -21,13 +21,11 @@ export const getMe = async () => {
     throw {
       message,
     };
-
   }
   return { success, message, user };
 };
 
 export const registerUser = async (username, password) => {
-
   try {
     const response = await fetch(`${baseUrl}/users/register`, {
       method: "POST",
@@ -70,6 +68,19 @@ export const loginUser = async (username, password) => {
   }
   return { success, message, data };
 };
+export async function logout() {
+  const response = await fetch(`${baseUrl}/users/logout`);
+  const { success, message } = await response.json();
+  if (!success) {
+    throw {
+      message,
+    };
+  }
+  return {
+    success,
+    message,
+  };
+}
 export const getAllPublicRoutines = async () => {
   try {
     const response = await fetch(`${baseUrl}/routines/public-routines`);

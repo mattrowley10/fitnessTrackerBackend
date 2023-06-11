@@ -9,7 +9,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setLoggedIn } = useAuth();
+  const { setLoggedIn, setUser } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,7 +17,7 @@ export default function Register() {
       const result = await registerUser(username, password);
       console.log(result);
       if (result.success) {
-        setUser(user);
+        setUser(result.data);
         setLoggedIn(true);
         nav("/");
       }

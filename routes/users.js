@@ -73,7 +73,11 @@ usersRouter.post("/login", async (req, res, next) => {
         httpOnly: true,
         signed: true,
       });
-      res.send(_user);
+      res.send({
+        success: true,
+        message: "Login Successful",
+        data: _user,
+      });
     }
   } catch (error) {
     next(error);
@@ -88,7 +92,7 @@ usersRouter.get("/logout", async (req, res, next) => {
       signed: true,
     });
     res.send({
-      loggedIn: false,
+      success: false,
       message: "Logged Out!",
     });
   } catch (error) {
