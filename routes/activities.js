@@ -38,18 +38,14 @@ activitiesRouter.post(
 );
 
 activitiesRouter.patch(
-  "/:activity-id",
+  "/:activity_id",
   authRequired,
   async (req, res, next) => {
     try {
-      const { activity_id } = req.params;
+      const id = req.params.id;
       const { name, description } = req.body;
-      const updatedActivity = await updateActivity(
-        activity_id,
-        name,
-        description
-      );
-      res.send({ updatedActivity });
+      const updatedActivity = await updateActivity(id, name, description);
+      res.send(updatedActivity);
     } catch (error) {
       next(error);
     }
@@ -57,7 +53,7 @@ activitiesRouter.patch(
 );
 
 activitiesRouter.get(
-  "/:activity-id/routines",
+  "/:activity_id/routines",
   authRequired,
   async (req, res, next) => {
     try {
