@@ -64,7 +64,9 @@ async function updateActivity(activityId, name, description) {
       [activityId, name, description]
     );
     return rows[0];
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {

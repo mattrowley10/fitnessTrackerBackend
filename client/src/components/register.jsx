@@ -19,6 +19,7 @@ export default function Register() {
         result = await registerUser(username, password);
       }
       if (result.success) {
+        setUser(user);
         setLoggedIn(true);
       }
     } catch (error) {

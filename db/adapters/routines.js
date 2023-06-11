@@ -124,9 +124,9 @@ async function getPublicRoutinesByActivity(activityId) {
       `
     SELECT *
     FROM routines
-    JOIN routine_activites ON routines.id = routine_activites.routine_id
+    JOIN routine_activities ON routines.id = routine_activities.routine_id
     WHERE routines.is_public = true
-    AND routine_activites.activity_id = $1
+    AND routine_activities.activity_id = $1
     `,
       [activityId]
     );
