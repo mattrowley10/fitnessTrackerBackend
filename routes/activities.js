@@ -7,7 +7,6 @@ const {
   getActivitiesById,
   createActivities,
   updateActivity,
-  updateActivity,
 } = require("../db/adapters/activities");
 const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
 
