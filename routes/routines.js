@@ -70,14 +70,14 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
   }
 });
 
-// routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
-//   try {
-//     const routineId = req.params.routineId;
-//     const routine = await getRoutineById(routineId);
+routinesRouter.delete("/:routine_id", authRequired, async (req, res, next) => {
+  try {
+    const routineId = req.params.routine_id;
+    const routine = await getRoutineById(routineId);
 
-//     await destroyRoutine(routineId);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    await destroyRoutine(routineId);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = routinesRouter;
