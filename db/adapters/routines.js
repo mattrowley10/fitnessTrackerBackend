@@ -18,26 +18,18 @@ async function createRoutines({ creator_id, is_public, name, goal }) {
   }
 }
 
-async function getRoutineById(id) {
+async function getRoutineById(creator_id) {
   try {
-    console.log("get routines by id", id);
     const {
       rows: [routine],
     } = await client.query(
       `
             SELECT *
             FROM routines
-            WHERE id = $1
+            WHERE creator_id = $1
             `,
-      [id]
+      [creator_id]
     );
-
-    if (!routine) {
-      throw {
-        name: "RoutineNotFoundError",
-        message: "No Routine with that id exists",
-      };
-    }
 
     return routine;
   } catch (error) {
@@ -61,7 +53,7 @@ async function getAllRoutines() {
     const { rows } = await client.query(`
     SELECT * FROM routines 
     LEFT JOIN activities 
-    ON routines.creator_id = activities.id
+    ON routines.id = activities.id
     `);
     return rows;
   } catch (error) {

@@ -47,8 +47,8 @@ routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
 
 routinesRouter.get("/:id", authRequired, async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const routineById = await getRoutineById(id);
+    const creator_id = req.params.creator_id;
+    const routineById = await getRoutineById(creator_id);
     res.send({
       routineById,
     });
@@ -72,10 +72,10 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
 
 routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
   try {
-    const routineId = req.params.routine_id;
-    const routine = await getRoutineById(routineId);
+    const id = req.params.creator_id;
+    const routine = await getRoutineById(id);
 
-    await destroyRoutine(routineId);
+    await destroyRoutine(routine);
   } catch (error) {
     next(error);
   }
