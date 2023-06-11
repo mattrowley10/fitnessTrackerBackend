@@ -1,27 +1,20 @@
 const activitiesRouter = require("express").Router();
+const SALT_ROUNDS = 10;
+const bcrypt = require("bcrypt");
+const { authRequired } = require("./utils");
 const {
   getAllActivities,
   getActivitiesById,
   createActivities,
+  updateActivity,
+  updateActivity,
 } = require("../db/adapters/activities");
 const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
-const { authRequired } = require("./utils");
 
 activitiesRouter.get("/activities", authRequired, async (req, res, next) => {
   try {
     const activities = await getAllActivities();
     res.send(activities);
-  } catch (error) {
-    next(error);
-  }
-});
-activitiesRouter.get("/:activityid", authRequired, async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const activitiesById = await getActivitiesById(id);
-    res.send({
-      activitiesById,
-    });
   } catch (error) {
     next(error);
   }
@@ -41,8 +34,27 @@ activitiesRouter.post(
   }
 );
 
+activitiesRouter.patch(
+  "/:activity_id",
+  authRequired,
+  async (req, res, next) => {
+    try {
+      const { activity_id } = req.params;
+      const { name, description } = req.body;
+      const updatedActivity = await updateActivity(
+        activity_id,
+        name,
+        description
+      );
+      res.send(updatedActivity);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 activitiesRouter.get(
-  "/:activityId/routines",
+  "/:activity_id/routines",
   authRequired,
   async (req, res, next) => {
     try {
