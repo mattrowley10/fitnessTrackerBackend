@@ -22,18 +22,15 @@ async function getActivitiesById(activityId) {
   try {
     const {
       rows: [activity],
-    } = await client.query(`
+    } = await client.query(
+      `
         SELECT id, name, description
         FROM activities
-        WHERE id=${activityId}
-        `);
+        WHERE id=$1
+        `,
+      [activityId]
+    );
 
-    if (!activity) {
-      throw {
-        name: "ActivityNotFoundError",
-        message: "No activity with that id exists",
-      };
-    }
     return activity;
   } catch (error) {
     throw error;
@@ -63,9 +60,9 @@ async function updateActivity(activityId, name, description) {
     RETURNING *`,
       [activityId, name, description]
     );
-    return rows[0];
+    return rows;
   } catch (error) {
-    next(error);
+    throw error;
   }
 }
 
