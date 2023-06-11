@@ -8,8 +8,8 @@ const authRequired = (req, res, next) => {
     console.log("Req.user: ", req.user);
   } catch (error) {
     res.status(401).send({
-      loggedIn: false,
-      message: "You are not authorized!!!",
+      success: false,
+      message: "Please Register or Login :}",
     });
     return;
   }

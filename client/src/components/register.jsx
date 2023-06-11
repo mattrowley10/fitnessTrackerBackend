@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { registerUser } from "../api/helpers";
 import useAuth from "../hooks/useAuth";
+import { useLocation } from "react-router-dom";
 import "../App.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { pathname } = useLocation();
 
-  const { setToken } = useAuth();
+  const { setUser, setLoggedIn } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = await registerUser({ username, password });
-      console.log("Result in component: ", result);
-      setToken(result);
-      // localStorage.setItem("token", result);
+      let result;
+      if (pathname === "/register") {
+        result = await registerUser(username, password);
+      }
+      if (result.success) {
+        setLoggedIn(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -27,6 +32,7 @@ export default function Register() {
         <div className="register-form">
           <h2>Register</h2>
           <br></br>
+          <label name="username">Username:{""}</label>
           <input
             type="text"
             name="username"
@@ -34,10 +40,13 @@ export default function Register() {
             onChange={(e) => setUsername(e.target.value)}
           />
           <br />
+          <br></br>
+          <label className="password">Password:</label>
           <input
             type="text"
             name="password"
             placeholder="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />

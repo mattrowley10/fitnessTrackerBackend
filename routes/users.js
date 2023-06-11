@@ -35,7 +35,11 @@ usersRouter.post("/register", async (req, res, next) => {
       signed: true,
     });
 
-    res.send(user);
+    res.send({
+      success: true,
+      message: "Registration Successful!",
+      data: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -91,7 +95,7 @@ usersRouter.get("/logout", async (req, res, next) => {
 });
 
 usersRouter.get("/me", authRequired, async (req, res, next) => {
-  res.send(req.user);
+  res.send({ success: true, message: "you are authorized", user: req.user });
 });
 
 usersRouter.get("/", async (req, res, next) => {
