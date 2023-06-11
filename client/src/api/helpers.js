@@ -17,19 +17,19 @@ const baseUrl = "/api";
 export const getMe = async () => {
   try {
     const response = await fetch(`${baseUrl}/users/me`);
-    const { success, message, data } = await response.json();
+    const { success, message, user } = await response.json();
     if (!success) {
       throw {
         success,
         message,
       };
     }
-    return { success, message, data };
+    return { success, message, user };
   } catch (error) {
     console.error(error);
   }
 };
-export const registerUser = async ({ username, password }) => {
+export const registerUser = async (username, password) => {
   try {
     const response = await fetch(`${baseUrl}/users/register`, {
       method: "POST",
@@ -37,10 +37,8 @@ export const registerUser = async ({ username, password }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: {
-          username,
-          password,
-        },
+        username,
+        password,
       }),
     });
     const { success, message, data } = await response.json();
@@ -55,25 +53,24 @@ export const registerUser = async ({ username, password }) => {
   }
 };
 export const loginUser = async (username, password) => {
-  try {
-    const response = await fetch(`${baseUrl}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          username,
-          password,
-        },
-      }),
-    });
-    const { success, message, user } = await response.json();
-    console.log(user);
-    return { success, message, user };
-  } catch (error) {
-    console.error(error);
+  const response = await fetch(`${baseUrl}/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  });
+  const { success, message, data } = await response.json();
+  console.log(data);
+  if (!success) {
+    throw {
+      message,
+    };
   }
+  return { success, message, data };
 };
 export const getAllPublicRoutines = async () => {
   try {

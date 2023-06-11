@@ -23,6 +23,7 @@ server.use((req, res, next) => {
 
 server.use((err, req, res, next) => {
   res.send({
+    success: false,
     message: err.message,
     name: err.name,
     stack: err.stack,

@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { registerUser } from "../api/helpers";
 import useAuth from "../hooks/useAuth";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 export default function Register() {
+  const nav = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { pathname } = useLocation();
 
-  const { setUser, setLoggedIn } = useAuth();
+  const { setLoggedIn } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      let result;
-      if (pathname === "/register") {
-        result = await registerUser(username, password);
-      }
+      const result = await registerUser(username, password);
+      console.log(result);
       if (result.success) {
         setLoggedIn(true);
+        nav("/");
       }
     } catch (error) {
       console.error(error);

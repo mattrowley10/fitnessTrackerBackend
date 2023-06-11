@@ -1,4 +1,3 @@
-import React from "react";
 import { createContext, useState, useEffect } from "react";
 import { getMe } from "../api/helpers";
 
@@ -10,7 +9,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function fetchMe() {
       try {
-        const { user } = await getMe();
+        const { user } = await getMe(user);
         setUser(user);
         setLoggedIn(true);
       } catch (error) {
