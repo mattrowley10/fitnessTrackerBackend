@@ -8,7 +8,7 @@ const {
   destroyRoutineActivity,
 } = require("../db/adapters/routine_activities");
 
-routineActivityRouter.post("/routine_activities", async (res, req, next) => {
+routineActivityRouter.post("/routine-activities", async (res, req, next) => {
   try {
     const routineActivity = await createRoutineActivities({
       routine_id,
@@ -23,7 +23,7 @@ routineActivityRouter.post("/routine_activities", async (res, req, next) => {
 });
 
 routineActivityRouter.patch(
-  "/routine_activities/:routine_activities",
+  "/:routine-activities",
   authRequired,
   async (req, res, next) => {
     try {
@@ -43,7 +43,7 @@ routineActivityRouter.patch(
 );
 
 routineActivityRouter.delete(
-  "/routine_activities/:routine_activities",
+  "/:routine_activities",
   authRequired,
   async (req, req, next) => {
     try {
