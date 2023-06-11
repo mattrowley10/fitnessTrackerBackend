@@ -8,15 +8,14 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const { setToken } = useAuth();
-  // console.log("User from RegisterForm: ", user);
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = await registerUser(username, password);
+      const result = await registerUser({ username, password });
       console.log("Result in component: ", result);
       setToken(result);
-      localStorage.setItem("token", result);
+      // localStorage.setItem("token", result);
     } catch (error) {
       console.error(error);
     }
