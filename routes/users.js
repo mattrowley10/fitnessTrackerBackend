@@ -17,7 +17,7 @@ usersRouter.post("/register", async (req, res, next) => {
     const _user = await getUserByUsername(username);
     if (_user) {
       next({
-        message: "That use already exists!",
+        message: "That user already exists!",
         name: "Auth Error",
       });
       return;

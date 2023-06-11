@@ -28,6 +28,11 @@ export default function Navbar() {
           </button>
         </li>
         <li>
+          <button className="link" onClick={() => nav("/Activities")}>
+            Activities
+          </button>
+        </li>
+        <li>
           <button className="link" onClick={() => nav("/Login")}>
             Login
           </button>

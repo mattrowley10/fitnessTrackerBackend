@@ -23,7 +23,10 @@ export default function Home() {
       {routines.map((routine) => {
         return (
           <div className="one-routine" key={routine.id}>
-            <h1 className="routine-name">{routine.name}</h1>
+            <h2 className="routine-name">{routine.name}</h2>
+            <ul className="routine-info">
+              <li>{routine.description}</li>
+            </ul>
           </div>
         );
       })}
