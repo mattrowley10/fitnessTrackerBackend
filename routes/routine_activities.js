@@ -43,7 +43,7 @@ routineActivityRouter.patch(
 );
 
 routineActivityRouter.delete(
-  "/:routine_activities",
+  "/:routine-activities",
   authRequired,
   async (req, res, next) => {
     try {
