@@ -110,7 +110,8 @@ async function getPublicRoutinesByUser(username) {
     JOIN users ON routines.creator_id = users.id
     WHERE routines.is_public = true
     AND users.username = $1 
-    `[username]
+    `,
+      [username]
     );
     return rows;
   } catch (error) {

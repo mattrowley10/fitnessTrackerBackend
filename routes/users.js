@@ -7,6 +7,7 @@ const {
   getUserById,
   createUser,
   getUserByUsername,
+  getUser,
 } = require("../db/adapters/users");
 const { authRequired } = require("./utils");
 
@@ -16,6 +17,7 @@ usersRouter.post("/register", async (req, res, next) => {
 
     const _user = await getUserByUsername(username);
     if (_user) {
+      res.status(409);
       next({
         message: "That user already exists!",
         name: "Auth Error",
