@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({ id: null, username: "Guest" });
   const [loggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
     async function fetchMe() {
       try {
@@ -14,18 +15,22 @@ const AuthProvider = ({ children }) => {
         setLoggedIn(true);
       } catch (error) {
         setUser({ username: "Guest" });
+        setLoggedIn(false);
       }
     }
     fetchMe();
   }, [loggedIn]);
+
   const contextValue = {
     user,
     setUser,
     loggedIn,
     setLoggedIn,
   };
+
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
+
 export default AuthProvider;

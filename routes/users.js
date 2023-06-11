@@ -79,7 +79,7 @@ usersRouter.post("/login", async (req, res, next) => {
     next(error);
   }
 });
-
+// api/users/logout
 usersRouter.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {

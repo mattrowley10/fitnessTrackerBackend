@@ -10,7 +10,7 @@ const {
 } = require("../db/adapters/activities");
 const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
 
-activitiesRouter.get("/activities", authRequired, async (req, res, next) => {
+activitiesRouter.get("/", authRequired, async (req, res, next) => {
   try {
     const activities = await getAllActivities();
     res.send(activities);
@@ -25,8 +25,12 @@ activitiesRouter.post(
   async (req, res, next) => {
     try {
       const { name, description } = req.body;
-      const activity = await createActivities({ name, description });
-      req.send(activity);
+      const activity = await createActivities({
+        activity_id: req.user.id,
+        name,
+        description,
+      });
+      res.send(activity);
     } catch (error) {
       next(error);
     }
@@ -34,7 +38,7 @@ activitiesRouter.post(
 );
 
 activitiesRouter.patch(
-  "/:activity_id",
+  "/:activity-id",
   authRequired,
   async (req, res, next) => {
     try {
@@ -45,7 +49,7 @@ activitiesRouter.patch(
         name,
         description
       );
-      res.send(updatedActivity);
+      res.send({ updatedActivity });
     } catch (error) {
       next(error);
     }
@@ -53,14 +57,14 @@ activitiesRouter.patch(
 );
 
 activitiesRouter.get(
-  "/:activity_id/routines",
+  "/:activity-id/routines",
   authRequired,
   async (req, res, next) => {
     try {
       const { activity_id } = req.params;
       const activity = await getActivitiesById(activity_id);
       const routines = await getPublicRoutinesByActivity(activity_id);
-      req.send({ activity, routines });
+      res.send({ activity, routines });
     } catch (error) {
       next(error);
     }

@@ -15,21 +15,19 @@ const baseUrl = "/api";
 //   }
 // };
 export const getMe = async () => {
-  try {
-    const response = await fetch(`${baseUrl}/users/me`);
-    const { success, message, user } = await response.json();
-    if (!success) {
-      throw {
-        success,
-        message,
-      };
-    }
-    return { success, message, user };
-  } catch (error) {
-    console.error(error);
+  const response = await fetch(`${baseUrl}/users/me`);
+  const { success, message, user } = await response.json();
+  if (!success) {
+    throw {
+      message,
+    };
+
   }
+  return { success, message, user };
 };
+
 export const registerUser = async (username, password) => {
+
   try {
     const response = await fetch(`${baseUrl}/users/register`, {
       method: "POST",
