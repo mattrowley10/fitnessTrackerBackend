@@ -8,7 +8,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Routines from "./components/Routines";
 import RoutineActivities from "./components/RoutineActivities";
-import Activities from "./components/Activities";
+import Activities from "./components/activities";
 import "./App.css";
 import Footer from "./components/Footer";
 
