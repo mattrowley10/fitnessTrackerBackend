@@ -30,16 +30,11 @@ routinesRouter.get("/public-routines", async (req, res, next) => {
   }
 });
 
+//unfunctional
 routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
   try {
-    const { is_public, name, goal } = req.body;
-
-    const newRoutine = await createRoutines({
-      creator_id: req.user.id,
-      is_public,
-      name,
-      goal,
-    });
+    const { creator_id, is_public, name, goal } = req.body;
+    const newRoutine = await createRoutines(creator_id, is_public, name, goal);
     res.send(newRoutine);
   } catch (error) {
     next(error);
@@ -62,9 +57,7 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
   try {
     const { is_public, name, goal } = req.body;
     const id = req.params.routineId;
-    console.log("patch", req.params);
-    const routine_id = await getRoutineById(id);
-    const newRoutine = await updateRoutine(is_public, name, goal, id);
+    const newRoutine = await updateRoutine(id, is_public, name, goal, id);
     res.send(newRoutine);
   } catch (error) {
     next(error);

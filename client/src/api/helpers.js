@@ -101,6 +101,7 @@ export const getAllRoutines = async () => {
     console.error(error);
   }
 };
+
 export const createRoutine = async (creator_id, is_public, name, goal) => {
   try {
     const response = await fetch(`${baseUrl}/posts`, {
