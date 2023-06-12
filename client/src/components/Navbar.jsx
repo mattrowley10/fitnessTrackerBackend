@@ -10,6 +10,7 @@ export default function Navbar() {
   async function handleLogout(e) {
     e.preventDefault();
     window.alert("You are Logged Out!");
+    nav("/");
     window.location.reload(false);
     const result = await logout();
     console.log(result);

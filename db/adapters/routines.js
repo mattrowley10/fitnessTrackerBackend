@@ -18,7 +18,7 @@ async function createRoutines({ creator_id, is_public, name, goal }) {
   }
 }
 
-async function getRoutineById(creator_id) {
+async function getRoutineById(id) {
   try {
     const {
       rows: [routine],
@@ -26,9 +26,9 @@ async function getRoutineById(creator_id) {
       `
             SELECT *
             FROM routines
-            WHERE creator_id = $1
+            WHERE id = $1
             `,
-      [creator_id]
+      [id]
     );
 
     return routine;

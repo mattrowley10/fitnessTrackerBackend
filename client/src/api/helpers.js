@@ -101,3 +101,37 @@ export const getAllRoutines = async () => {
     console.error(error);
   }
 };
+export const createRoutine = async (creator_id, is_public, name, goal) => {
+  try {
+    const response = await fetch(`${baseUrl}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        post: {
+          creator_id,
+          is_public,
+          name,
+          goal,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getAllActivities = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/activities`);
+    const result = await response.json();
+    console.log("response from activities", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};

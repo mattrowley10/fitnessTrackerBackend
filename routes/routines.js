@@ -8,12 +8,13 @@ const {
   destroyRoutine,
   createRoutines,
   updateRoutine,
+  getRoutinesWithoutActivities,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
 routinesRouter.get("/", authRequired, async (req, res, next) => {
   try {
-    const routines = await getAllRoutines();
+    const routines = await getRoutinesWithoutActivities();
     res.send(routines);
   } catch (error) {
     next(error);
@@ -47,8 +48,8 @@ routinesRouter.post("/create-routine", authRequired, async (req, res, next) => {
 
 routinesRouter.get("/:id", authRequired, async (req, res, next) => {
   try {
-    const creator_id = req.params.creator_id;
-    const routineById = await getRoutineById(creator_id);
+    const id = req.params.id;
+    const routineById = await getRoutineById(id);
     res.send({
       routineById,
     });
@@ -70,11 +71,10 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
   }
 });
 
-routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
+routinesRouter.delete(`/:id`, authRequired, async (req, res, next) => {
   try {
-    const id = req.params.creator_id;
+    const id = req.params.id;
     const routine = await getRoutineById(id);
-
     await destroyRoutine(routine);
   } catch (error) {
     next(error);

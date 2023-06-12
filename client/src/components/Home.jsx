@@ -2,9 +2,10 @@
 // import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { getAllPublicRoutines } from "../api/helpers";
+import useAuth from "../hooks/useAuth";
 
 export default function Home() {
-  // const nav = useNavigate();
+  const { user } = useAuth();
   const [routines, setRoutines] = useState([]);
   useEffect(() => {
     async function allPublicRoutines() {
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <div className="home-page">
+      <h1 className="home-header">What is up, {user.username}!</h1>
       {routines.map((routine) => {
         return (
           <div className="one-routine" key={routine.id}>
