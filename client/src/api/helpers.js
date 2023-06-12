@@ -101,3 +101,18 @@ export const getAllRoutines = async () => {
     console.error(error);
   }
 };
+
+// export const getAllActivities = async () =. {
+//   try {
+//     const response = await fetch(`${baseUrl}/activities`,{
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     const result = await response.json();
+
+//     console.log(result);
+//     return result
+//   } catch (error) {
+//     console.error(err);}
+// }
